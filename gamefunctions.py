@@ -146,6 +146,15 @@ def new_random_monster():
        money = random.randint(20,34)
        return name, description, health, power, money
 
+def test_functions():
+    print_welcome('User')
+    print_shop_menu('Apple',1.25,'Orange',1.50)
+    purchase_item(1.25, 4, 2)
+    create_new_monster()
+
+if __name__ == "__main__":
+    test_functions()
+
 
 
 
