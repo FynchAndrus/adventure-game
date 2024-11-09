@@ -147,18 +147,18 @@ def new_random_monster():
        return name, description, health, power, money
 
 def displayFightStatistics():
-    print(f'{user_monster[name]}: {user_monster[health]:20}{user_health} :{user_name}')
+    print(f'{new_random_monster[name]}: {new_random_monster[health]:20}{user_health} :{user_name}')
 
 def userFightOptions():
     print('Would you like to...\n1) Fight\n2) Run away')
     action = input()
-    while action != 1 or 2:
+    while action != ('1' or '2'):
         print("Please enter the digit that corresponds with the action you would like to make") 
     while user_health > 0:
-        if action == 1:
-            monster_health = user_monster[health] - user_power
-            user_health = user_health - user_monster[power]
-            displayFightStatistics()
+        if action == '1':
+            monster_health -= user_base[power]
+            user_health -= new_random_monster[power]
+            displayFightStatistics(monster_name,monster_health,user_name,user_health)
             action = input()
         else:
             exit()
@@ -167,26 +167,34 @@ def game_menu():
     print("Current HP: 30, Current Gold: 10")
     print("What would you like to do? (Enter number)\n")
     print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
-    action = input()
-    while action != 1 or 2 or 3:
+    action = str(input())
+    while action != ('1' or '2'):
         print("Please enter the digit that corresponds with the action you would like to make")
-    if action == 1:
-        displayFightStatistics()
+    if action == '1'
+        displayFightSatistics()
         userFightOptions()
-    elif action == 2:
-        gold = 5
-        user_health = 30
+    elif action == '2':
+        user_base[money] -= 5
+        user_base[health] = 30
     else:
         exit()
+
+def user_base(name):
+    name = name
+    money = 10
+    health = 30
+    power = random.randint(5,15)
+    return name, money, health, power
 
 def test_functions():
     print_welcome('User')
     print_shop_menu('Apple',1.25,'Orange',1.50)
     purchase_item(1.25, 4, 2)
-    create_new_monster()
+    new_random_monster()
     displayFightStatistics()
     userFightOptions()
     game_menu()
+    user_base('User')
 
 if __name__ == "__main__":
     test_functions()
