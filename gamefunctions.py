@@ -146,16 +146,47 @@ def new_random_monster():
        money = random.randint(20,34)
        return name, description, health, power, money
 
+def displayFightStatistics():
+    print(f'{user_monster[name]}: {user_monster[health]:20}{user_health} :{user_name}')
+
+def userFightOptions():
+    print('Would you like to...\n1) Fight\n2) Run away')
+    action = input()
+    while action != 1 or 2:
+        print("Please enter the digit that corresponds with the action you would like to make") 
+    while user_health > 0:
+        if action == 1:
+            monster_health = user_monster[health] - user_power
+            user_health = user_health - user_monster[power]
+            displayFightStatistics()
+            action = input()
+        else:
+            exit()
+    pass
+def game_menu():
+    print("Current HP: 30, Current Gold: 10")
+    print("What would you like to do? (Enter number)\n")
+    print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
+    action = input()
+    while action != 1 or 2 or 3:
+        print("Please enter the digit that corresponds with the action you would like to make")
+    if action == 1:
+        displayFightStatistics()
+        userFightOptions()
+    elif action == 2:
+        gold = 5
+        user_health = 30
+    else:
+        exit()
+
 def test_functions():
     print_welcome('User')
     print_shop_menu('Apple',1.25,'Orange',1.50)
     purchase_item(1.25, 4, 2)
     create_new_monster()
+    displayFightStatistics()
+    userFightOptions()
+    game_menu()
 
 if __name__ == "__main__":
     test_functions()
-
-
-
-
-
