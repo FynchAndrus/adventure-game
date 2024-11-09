@@ -146,8 +146,15 @@ def new_random_monster():
        money = random.randint(20,34)
        return name, description, health, power, money
 
+def user_base(name):
+    name = name
+    money = 10
+    health = 30
+    power = random.randint(5,15)
+    return name, money, health, power
+    
 def displayFightStatistics():
-    print(f'{new_random_monster[name]}: {new_random_monster[health]:20}{user_health} :{user_name}')
+    print(f'{new_random_monster[name]}: {new_random_monster[health]:20}{user_base[health]} :{user_base[name]}')
 
 def userFightOptions():
     print('Would you like to...\n1) Fight\n2) Run away')
