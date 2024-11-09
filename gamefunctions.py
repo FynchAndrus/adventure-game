@@ -168,14 +168,14 @@ def userFightOptions():
             displayFightStatistics(monster_name,monster_health,user_name,user_health)
             action = input()
         else:
-            exit()
+            game_menu()
     pass
 def game_menu():
     print("Current HP: 30, Current Gold: 10")
     print("What would you like to do? (Enter number)\n")
     print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
     action = str(input())
-    while action != ('1' or '2'):
+    while action != ('1' or '2' or '3'):
         print("Please enter the digit that corresponds with the action you would like to make")
     if action == '1':
         displayFightSatistics()
@@ -183,8 +183,9 @@ def game_menu():
     elif action == '2':
         user_base[money] -= 5
         user_base[health] = 30
+        return user_base[money], user_base[health]
     else:
-        exit()
+        print('goodbye')
 
 def user_base(name):
     name = name
@@ -198,10 +199,10 @@ def test_functions():
     print_shop_menu('Apple',1.25,'Orange',1.50)
     purchase_item(1.25, 4, 2)
     new_random_monster()
+    user_base('User')
     displayFightStatistics()
     userFightOptions()
     game_menu()
-    user_base('User')
 
 if __name__ == "__main__":
     test_functions()
