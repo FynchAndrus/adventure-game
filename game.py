@@ -12,5 +12,10 @@ purchase = strip.lower.input()
 print("How many would you like to buy? ")
 amount = int(input())
 if purchase == 'sword':
-  
+  purchase_item(15,amount,user_monster[money])
+elif purchase == 'healing potion':
+  purchase_item(5,amount,user_monster[money])
+else:
+  print("That item isn't for sale")
+
   
