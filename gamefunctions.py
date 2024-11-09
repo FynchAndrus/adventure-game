@@ -177,7 +177,7 @@ def game_menu():
     action = str(input())
     while action != ('1' or '2'):
         print("Please enter the digit that corresponds with the action you would like to make")
-    if action == '1'
+    if action == '1':
         displayFightSatistics()
         userFightOptions()
     elif action == '2':
