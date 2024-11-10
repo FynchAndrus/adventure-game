@@ -210,22 +210,16 @@ def user_action(source):
     if source == 'game_menu':
         print("What would you like to do? (Enter number)\n")
         choice = int(input())
-        while choice not in [1, 2, 3, 4]:
+       while choice not in [1, 2, 3]:
             print("Please enter the digit that corresponds with the action you would like to make.")
             print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
             choice = int(input())          
         if choice == 1:
-            '''FIXME: I want to call these functions but they have their own parameters and I don't know what those are.
-            I also think I'm over-beefing this function because the work is supposed to be done by the functions, this is just to
-            process input variables so name == main will work without requiring inputs
-            new_random_monster()
-            display_health_bar()
-            user_fight_options()'''
-            pass
+            return 1
         elif choice == 2:
-            user_sleep()
+            return 2
         elif choice == 3:
-            print('Goodbye')
+            return 3
     elif source == 'fight_options':
         pass
 
@@ -233,7 +227,18 @@ def game_menu():
     print('Hello! Welcome to the game menu!')
     print('Here you can access any of the things you may want to do!')
     print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
-    
+    if __name__ == "__main__":
+        choice = 3
+    else:
+        choice = user_action('game_menu')
+    if choice == 1:
+        new_random_monster()
+        user_fight_options()
+    if choice == 2:
+        user_sleep()
+    if choice == 3:
+        print ('goodbye')
+        
 def user_sleep():
     pass
 
