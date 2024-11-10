@@ -1,9 +1,10 @@
 #gamefunctions.py
 #Fynch Andrus
-#10/20/2024
+#11/09/2024
 
 #Create modual summary DocString using the comments in file
 #turn individual function comments into doc strings
+#Create functions to allow for game play
 
 '''gamefunctions.py is a module containing definitions to aid in game play.
 
@@ -200,29 +201,39 @@ def display_health_bar(monster,monster_health,user,user_health):
     print(f'|{monster_setup:15}{user_setup:>15}|')
     print(f'|{monster_health_bar:15}{user_health_bar:>15}|')
 
-def user_action(choice):
-    '''This function is to retrieve and process the actions that a player will make.'''
-    while True:
-        if choice in ['1', '2', '3']:
-            return int(choice)
-        print("Please enter the digit that corresponds with the action you would like to make")
+def user_action(source):
+    '''This function is to retrieve and process the actions that a player will make.
+    
+    Parameters:
+     source(str): this is what function the choice comes from
+     '''
+    if source == 'game_menu':
+        print("What would you like to do? (Enter number)\n")
+        choice = int(input())
+        while choice not in [1, 2, 3, 4]:
+            print("Please enter the digit that corresponds with the action you would like to make.")
+            print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
+            choice = int(input())          
+        if choice == 1:
+            '''FIXME: I want to call these functions but they have their own parameters and I don't know what those are.
+            I also think I'm over-beefing this function because the work is supposed to be done by the functions, this is just to
+            process input variables so name == main will work without requiring inputs
+            new_random_monster()
+            display_health_bar()
+            user_fight_options()'''
+            pass
+        elif choice == 2:
+            user_sleep()
+        elif choice == 3:
+            print('Goodbye')
+    elif source == 'fight_options':
+        pass
 
 def game_menu():
-    print("Current HP: 30, Current Gold: 10")
-    print("What would you like to do? (Enter number)\n")
+    print('Hello! Welcome to the game menu!')
+    print('Here you can access any of the things you may want to do!')
     print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
-    action = str(input())
-    while action != ('1' or '2' or '3'):
-        print("Please enter the digit that corresponds with the action you would like to make")
-        action = str(input())
-    if action == '1':
-        displayFightStatistics()
-        userFightOptions()
-    elif action == '2':
-        user_sleep()
-    else:
-        print('goodbye')
-
+    
 def user_sleep():
     pass
 
@@ -235,10 +246,12 @@ def test_functions():
     purchase_item(1.25, 4, 2)
     new_random_monster()
     #new functions: 
-    user_base('User')
+    user_base()
     display_health_bar('Sprite', 20, 'User', 10)
-    game_menu()
-    user_fight_options()
+    user_action('game_menu')
+    #FIXME: game_menu()
+    #FIXME: user_fight_options()
+    #FIXME: user_sleep()
 
 if __name__ == "__main__":
     test_functions()
