@@ -1,10 +1,9 @@
 #gamefunctions.py
 #Fynch Andrus
-#11/09/2024
+#10/20/2024
 
 #Create modual summary DocString using the comments in file
 #turn individual function comments into doc strings
-#Create functions to allow for game play
 
 '''gamefunctions.py is a module containing definitions to aid in game play.
 
@@ -131,23 +130,21 @@ def new_random_monster():
         health = random.randint(12,26)
         power = random.randint(8,12)
         money = random.randint(27,42)
-        return [name, description, health, power, money]
+        return name, description, health, power, money
     elif monster == 2:
         name = 'Imp'
         description = 'Tiny fiend (devil, shapechanger)'
         health = random.randint(11,25)
         power = random.randint(8,12)
         money = random.randint(42,56)
-        return [name, description, health, power, money]
+        return name, description, health, power, money
     elif monster == 3:
        name = 'Skeleton'
        description = 'Remanants of the undead, resurrected.'
        health = random.randint(6,20)
        power = random.randint(12,16)
        money = random.randint(20,34)
-       return [name, description, health, power, money]
-    
-monster_list = new_random_monster()
+       return name, description, health, power, money
 
 def user_base():
     '''This function provides base values to allow functions to work. These also work as
@@ -172,9 +169,7 @@ def user_base():
     money = 10
     health = 30
     power = random.randint(5,15)
-    return [name, money, health, power]
-      
-userBase_list = user_base()
+    return name, money, health, power
 
 def display_health_bar(monster,monster_health,user,user_health):
     '''This function is to display the health bar of both the player and the monster during
@@ -210,7 +205,7 @@ def user_action(source):
     if source == 'game_menu':
         print("What would you like to do? (Enter number)\n")
         choice = int(input())
-       while choice not in [1, 2, 3]:
+        while choice not in [1, 2, 3]:
             print("Please enter the digit that corresponds with the action you would like to make.")
             print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
             choice = int(input())          
@@ -221,8 +216,15 @@ def user_action(source):
         elif choice == 3:
             return 3
     elif source == 'fight_options':
-        pass
-
+        print("What would you like to do? (Enter number)\n")
+        choice = int(input())
+        while choice not in [1,2]:
+            print("Please enter the digit that corresponds with the action you would like to make")
+            choice = int(input()) 
+            if choice == 1:
+                return 1
+            elif choice == 2:
+                return 2
 def game_menu():
     print('Hello! Welcome to the game menu!')
     print('Here you can access any of the things you may want to do!')
@@ -238,12 +240,25 @@ def game_menu():
         user_sleep()
     if choice == 3:
         print ('goodbye')
-        
-def user_sleep():
-    pass
+
+def user_sleep(money):
+    health = 30
+    money -= 5
+    return health, money
 
 def user_fight_options():
-    pass
+    print('A monster has appeared!')
+    print('You can...\n1) Fight\n2) Run away')
+    if __name__ == "__main__":
+        choice = 2
+    else:
+        choice = user_action('fight_options')
+    if choice == 1:
+        display_health_bar()
+        print('Fight!')
+        pass
+    elif choice == 2:
+        game_menu()
     
 def test_functions():
     print_welcome('User')
@@ -253,10 +268,9 @@ def test_functions():
     #new functions: 
     user_base()
     display_health_bar('Sprite', 20, 'User', 10)
-    user_action('game_menu')
-    #FIXME: game_menu()
-    #FIXME: user_fight_options()
-    #FIXME: user_sleep()
+    game_menu()
+    user_fight_options()
+    user_sleep()
 
 if __name__ == "__main__":
     test_functions()
