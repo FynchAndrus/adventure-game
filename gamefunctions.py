@@ -270,7 +270,7 @@ def test_functions():
     display_health_bar('Sprite', 20, 'User', 10)
     game_menu()
     user_fight_options()
-    user_sleep()
+    user_sleep(10)
 
 if __name__ == "__main__":
     test_functions()
