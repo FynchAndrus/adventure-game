@@ -127,37 +127,72 @@ def new_random_monster():
     if monster == 1:
         name = 'Sprite'
         description = 'Tiny fey creature, often associated with the natural elements.'
-        health = random.randint(12,16)
+        health = random.randint(12,26)
         power = random.randint(8,12)
         money = random.randint(27,42)
         return [name, description, health, power, money]
     elif monster == 2:
         name = 'Imp'
         description = 'Tiny fiend (devil, shapechanger)'
-        health = random.randint(11,15)
+        health = random.randint(11,25)
         power = random.randint(8,12)
         money = random.randint(42,56)
         return [name, description, health, power, money]
     elif monster == 3:
        name = 'Skeleton'
        description = 'Remanants of the undead, resurrected.'
-       health = random.randint(6,10)
+       health = random.randint(6,20)
        power = random.randint(12,16)
        money = random.randint(20,34)
        return [name, description, health, power, money]
     
 monster_list = new_random_monster()
 
-def user_base(name):
-    name = name
+def user_base():
+    '''This function provides base values to allow functions to work. These also work as
+    starting values for a new player to use.
+    
+    Parameters: None
+    
+    Returns:
+     name(str): name of the player, default "User"
+     money(int): starting money for player, default 10
+     health(int): starting and reset health for player, default 30
+     power(randint): starting damage player can deal, range of 5 to 15.
+
+    Example:
+     >>> money, health = user_base()
+     >>>print(health)
+     30
+     >>>print(money)
+     10'''
+    
+    name = 'User'
     money = 10
     health = 30
     power = random.randint(5,15)
     return [name, money, health, power]
       
-userBase_list = user_base('User')
+userBase_list = user_base()
 
-def displayFightStatistics(monster,monster_health,user,user_health):
+def display_health_bar(monster,monster_health,user,user_health):
+    '''This function is to display the health bar of both the player and the monster during
+    a fight. The bar will decrease as they lose health.
+    
+    Parameters:
+     monster(str): name of the monster in the fight.
+     monster_health(int): how much health the monster has.
+     user(str): name of the player in the fight.
+     user_health(int): how much health the user has.
+     
+    Returns:
+     None
+     
+    Example:
+    >>>displayFightStatistics('Skeleton',20,'User', 30)
+    |Skeleton: 20          30 :User|
+    |----------     ---------------|'''
+    
     monster_setup = monster + ': ' + str(monster_health)
     user_setup = str(user_health) + ': ' + user
     monster_health_bar = '-' * (monster_health // 2)
@@ -165,24 +200,12 @@ def displayFightStatistics(monster,monster_health,user,user_health):
     print(f'|{monster_setup:15}{user_setup:>15}|')
     print(f'|{monster_health_bar:15}{user_health_bar:>15}|')
 
-def userFightOptions():
-    print('Would you like to...\n1) Fight\n2) Run away')
-    action = str(input())
-    while action != ('1' or '2'):
+def user_action(choice):
+    '''This function is to retrieve and process the actions that a player will make.'''
+    while True:
+        if choice in ['1', '2', '3']:
+            return int(choice)
         print("Please enter the digit that corresponds with the action you would like to make")
-        action = str(input()) 
-    while user_health > 0:
-        if action == '1':
-            monster_health -= user_base[3]
-            user_health -= new_random_monster[3]
-            displayFightStatistics()
-            action = input()
-        elif action == '2':
-            game_menu()
-    pass
-
-def user_sleep():
-    pass
 
 def game_menu():
     print("Current HP: 30, Current Gold: 10")
@@ -200,15 +223,22 @@ def game_menu():
     else:
         print('goodbye')
 
+def user_sleep():
+    pass
+
+def user_fight_options():
+    pass
+    
 def test_functions():
     print_welcome('User')
     print_shop_menu('Apple',1.25,'Orange',1.50)
     purchase_item(1.25, 4, 2)
     new_random_monster()
+    #new functions: 
     user_base('User')
-    displayFightStatistics('Sprite', 20, 'User', 10)
+    display_health_bar('Sprite', 20, 'User', 10)
     game_menu()
-    userFightOptions()
+    user_fight_options()
 
 if __name__ == "__main__":
     test_functions()
