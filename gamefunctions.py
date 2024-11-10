@@ -130,46 +130,60 @@ def new_random_monster():
         health = random.randint(12,16)
         power = random.randint(8,12)
         money = random.randint(27,42)
-        return name, description, health, power, money
+        return [name, description, health, power, money]
     elif monster == 2:
         name = 'Imp'
         description = 'Tiny fiend (devil, shapechanger)'
         health = random.randint(11,15)
         power = random.randint(8,12)
         money = random.randint(42,56)
-        return name, description, health, power, money
+        return [name, description, health, power, money]
     elif monster == 3:
        name = 'Skeleton'
        description = 'Remanants of the undead, resurrected.'
        health = random.randint(6,10)
        power = random.randint(12,16)
        money = random.randint(20,34)
-       return name, description, health, power, money
+       return [name, description, health, power, money]
+    
+monster_list = new_random_monster()
 
 def user_base(name):
     name = name
     money = 10
     health = 30
     power = random.randint(5,15)
-    return name, money, health, power
-    
-def displayFightStatistics():
-    print(f'{new_random_monster[name]}: {new_random_monster[health]:20}{user_base[health]} :{user_base[name]}')
+    return [name, money, health, power]
+      
+userBase_list = user_base('User')
+
+def displayFightStatistics(monster,monster_health,user,user_health):
+    monster_setup = monster + ': ' + str(monster_health)
+    user_setup = str(user_health) + ': ' + user
+    monster_health_bar = '-' * (monster_health // 2)
+    user_health_bar = '-' * (user_health // 2)
+    print(f'|{monster_setup:15}{user_setup:>15}|')
+    print(f'|{monster_health_bar:15}{user_health_bar:>15}|')
 
 def userFightOptions():
     print('Would you like to...\n1) Fight\n2) Run away')
-    action = input()
+    action = str(input())
     while action != ('1' or '2'):
-        print("Please enter the digit that corresponds with the action you would like to make") 
+        print("Please enter the digit that corresponds with the action you would like to make")
+        action = str(input()) 
     while user_health > 0:
         if action == '1':
-            monster_health -= user_base[power]
-            user_health -= new_random_monster[power]
-            displayFightStatistics(monster_name,monster_health,user_name,user_health)
+            monster_health -= user_base[3]
+            user_health -= new_random_monster[3]
+            displayFightStatistics()
             action = input()
-        else:
+        elif action == '2':
             game_menu()
     pass
+
+def user_sleep():
+    pass
+
 def game_menu():
     print("Current HP: 30, Current Gold: 10")
     print("What would you like to do? (Enter number)\n")
@@ -177,22 +191,14 @@ def game_menu():
     action = str(input())
     while action != ('1' or '2' or '3'):
         print("Please enter the digit that corresponds with the action you would like to make")
+        action = str(input())
     if action == '1':
-        displayFightSatistics()
+        displayFightStatistics()
         userFightOptions()
     elif action == '2':
-        user_base[money] -= 5
-        user_base[health] = 30
-        return user_base[money], user_base[health]
+        user_sleep()
     else:
         print('goodbye')
-
-def user_base(name):
-    name = name
-    money = 10
-    health = 30
-    power = random.randint(5,15)
-    return name, money, health, power
 
 def test_functions():
     print_welcome('User')
@@ -200,9 +206,9 @@ def test_functions():
     purchase_item(1.25, 4, 2)
     new_random_monster()
     user_base('User')
-    displayFightStatistics()
-    userFightOptions()
+    displayFightStatistics('Sprite', 20, 'User', 10)
     game_menu()
+    userFightOptions()
 
 if __name__ == "__main__":
     test_functions()
