@@ -1,4 +1,5 @@
 import gamefunctions
+#FIXME: add in new functions and fix weird monster thing
 print("Hello! To begin your adventure, enter your name: ")
 user_name = input()
 print_welcome(user_name)
