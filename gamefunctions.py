@@ -1,6 +1,6 @@
 #gamefunctions.py
 #Fynch Andrus
-#10/20/2024
+#11/12/2024
 
 #Create modual summary DocString using the comments in file
 #turn individual function comments into doc strings
@@ -130,30 +130,31 @@ def new_random_monster():
         health = random.randint(12,26)
         power = random.randint(8,12)
         money = random.randint(27,42)
-        return name, description, health, power, money
+        return [name, health, power, money, description]
     elif monster == 2:
         name = 'Imp'
-        description = 'Tiny fiend (devil, shapechanger)'
+        description = 'Tiny fiend (devil, shapechanger).'
         health = random.randint(11,25)
         power = random.randint(8,12)
         money = random.randint(42,56)
-        return name, description, health, power, money
+        return [name, health, power, money, description]
     elif monster == 3:
        name = 'Skeleton'
        description = 'Remanants of the undead, resurrected.'
        health = random.randint(6,20)
        power = random.randint(12,16)
        money = random.randint(20,34)
-       return name, description, health, power, money
+       return [name, health, power, money, description]
 
-def user_base():
+def user_base(name):
+    #FIXME: turn this into a dict
     '''This function provides base values to allow functions to work. These also work as
     starting values for a new player to use.
     
     Parameters: None
     
     Returns:
-     name(str): name of the player, default "User"
+     name(str): name of the player, default "Player"
      money(int): starting money for player, default 10
      health(int): starting and reset health for player, default 30
      power(randint): starting damage player can deal, range of 5 to 15.
@@ -164,12 +165,11 @@ def user_base():
      30
      >>>print(money)
      10'''
-    
-    name = 'User'
-    money = 10
-    health = 30
+    name = 'Player'
+    money = int(10)
+    health = int(30)
     power = random.randint(5,15)
-    return name, money, health, power
+    return [name, health, power, money]
 
 def display_health_bar(monster,monster_health,user,user_health):
     '''This function is to display the health bar of both the player and the monster during
@@ -188,7 +188,10 @@ def display_health_bar(monster,monster_health,user,user_health):
     >>>displayFightStatistics('Skeleton',20,'User', 30)
     |Skeleton: 20          30 :User|
     |----------     ---------------|'''
-    
+    if monster_health <= 0:
+        monster_health = 0
+    else:
+        monster_health = monster_health
     monster_setup = monster + ': ' + str(monster_health)
     user_setup = str(user_health) + ': ' + user
     monster_health_bar = '-' * (monster_health // 2)
@@ -234,8 +237,9 @@ def game_menu():
     else:
         choice = user_action('game_menu')
     if choice == 1:
-        new_random_monster()
-        user_fight_options()
+        monster = new_random_monster()
+        user = user_base('Player')
+        user_fight_options(monster, user)
     if choice == 2:
         user_sleep()
     if choice == 3:
@@ -246,17 +250,32 @@ def user_sleep(money):
     money -= 5
     return health, money
 
-def user_fight_options():
+def user_fight_options(monster, user):
     print('A monster has appeared!')
-    print('You can...\n1) Fight\n2) Run away')
+    print(f'A {monster[0]}; {monster[4]}\nHealth: {monster[1]}\nPower: {monster[2]}\nLoot: {monster[3]} gold')
+    print('Do you want to...\n1) Fight\n2) Run away')
     if __name__ == "__main__":
         choice = 2
     else:
         choice = user_action('fight_options')
     if choice == 1:
-        display_health_bar()
-        print('Fight!')
-        pass
+        display_health_bar(monster[0], monster[1], user[0], user[1])
+        print('The fight begins!')
+        monster_health = monster[1]
+        user_health = user[1]
+        while user_health > 0:
+            monster_health -= user[2]
+            user_health -= monster[2]
+            display_health_bar(monster[0], monster_health, user[0], user_health)
+            if monster_health <= 0:
+                print('You win!')
+                user[3]+= monster[3]
+                print(f"Here's your new stats:\nHealth: {user_health}\nMoney: {user[3]}")
+                game_menu()
+            else:
+                choice = user_action('fight_options')
+        print("You lost! :(")
+        game_menu()    
     elif choice == 2:
         game_menu()
     
@@ -266,10 +285,9 @@ def test_functions():
     purchase_item(1.25, 4, 2)
     new_random_monster()
     #new functions: 
-    user_base()
+    user_base('User')
     display_health_bar('Sprite', 20, 'User', 10)
     game_menu()
-    user_fight_options()
     user_sleep(10)
 
 if __name__ == "__main__":
