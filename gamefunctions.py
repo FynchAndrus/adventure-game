@@ -186,7 +186,7 @@ def user_action(source):
         choice = int(input())
         while choice not in [1, 2, 3, 4]:
             print("Please enter the digit that corresponds with the action you would like to make.")
-            print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Quit\n")
+            print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Visit Store\n4) Quit\n")
             choice = int(input())          
         if choice == 1:
             return 1
@@ -209,7 +209,7 @@ def user_action(source):
 def game_menu():
     print('Hello! Welcome to the game menu!')
     print('Here you can access any of the things you may want to do!')
-    print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Shop\n 4) Quit\n")
+    print("1) Fight Monster\n2) Sleep(Restore HP for 5 Gold)\n3) Visit Store\n 4) Quit\n")
     if __name__ == "__main__":
         choice = 3
     else:
