@@ -206,6 +206,17 @@ def user_action(source):
             return 1
         elif choice == 2:
             return 2
+    elif source == 'fight_continue':
+        print("What would you like to do? (Enter number)\n")
+        choice = int(input())
+        while choice not in [1,2]:
+            print("Please enter the digit that corresponds with the action you would like to make")
+            choice = int(input()) 
+        if choice == 1:
+            return 1
+        elif choice == 2:
+            return 2
+        
 def game_menu():
     print('Hello! Welcome to the game menu!')
     print('Here you can access any of the things you may want to do!')
@@ -239,7 +250,7 @@ def user_fight_options(monster):
         choice = user_action('fight_options')
     if choice == 1:
         display_health_bar(monster[0], monster[1], user_base['name'], user_base['health'])
-        print('The fight begins!')
+        print('The fight begins!\n')
         monster_health = monster[1]
         while user_base['health'] > 0:
             monster_health -= user_base['power']
@@ -249,9 +260,17 @@ def user_fight_options(monster):
                 print('You win!')
                 user_base['money']+= monster[3]
                 print(f"Here's your new stats:\nHealth: {user_base['health']}\nMoney: {user_base['money']}")
-                game_menu()
+                print('What would you like to do next?')
+                print(f'1) Return to menu\n2) exit')
+                choice = user_action('fight_continue')
+                if choice == 1:
+                    game_menu()
+                if choice == 2:
+                    exit
+
             else:
                 choice = user_action('fight_options')
+                
         print("You lost! :(")
         game_menu()    
     elif choice == 2:
