@@ -202,10 +202,10 @@ def user_action(source):
         while choice not in [1,2]:
             print("Please enter the digit that corresponds with the action you would like to make")
             choice = int(input()) 
-            if choice == 1:
-                return 1
-            elif choice == 2:
-                return 2
+        if choice == 1:
+            return 1
+        elif choice == 2:
+            return 2
 def game_menu():
     print('Hello! Welcome to the game menu!')
     print('Here you can access any of the things you may want to do!')
